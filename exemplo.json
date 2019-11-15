@@ -1,2 +1,5 @@
-primeira linha bla bla
-segunda linha bla bla
+{"primeira linha" : "bla bla",
+ "segunda linha" : "bla bla2"
+ "terceira linha" : "bla bla3",
+ "quarta linha" : "bla bla4"
+}
