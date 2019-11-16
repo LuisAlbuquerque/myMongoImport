@@ -43,7 +43,6 @@ var insert = (element) => (model) => model.collection.insertMany([element]);
 
 // TODO: mongoimport
 var mongoimport = (nameBD,nameC,content) => {
-                                    //content = JSON.stringify(content);
                                     db = create_dataBase (nameBD);
                                     model = create_collection (db) (nameC);
                                     (is_Array (content))? insert_all (content) (model)
@@ -109,7 +108,7 @@ function main (myArgs = process.argv.slice(2)){
                  xmlFile_to_mongo_with_xslt (file) (xsl) (db_name) (c_name)
                 :xmlFile_to_mongo (file) (db_name) (c_name);
             break;
-        case 'json':
+        case 'csv':
             csvFile_to_mongo (file) (db_name) (c_name);
             break;
         default:
