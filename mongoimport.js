@@ -77,6 +77,22 @@ function main (myArgs = process.argv.slice(2)){
     // FLAGS 
     //      --xslt=<name.xsl>
     //      --separator=[<separatorLines>,<separatorColumns>>
+    //
+    if(myArgs[0] =="--help"){
+        print("Usage:")
+        print(" node mongoimport <file> <database name> <collection name> <options>")
+        print("")
+        print("Import CSV, XML or JSON data into MongoDB")
+        print("")
+        print("")
+        print("Options")
+        print("  --xslt=<name.xsl>                      use stylesheet to turn xml into json file")
+        print("  --separatorR=<separator rows>          specify separator for rows")
+        print("  --separatorC=<separator columns>       specify separator for columns")
+        print("  --host=<hostname>                      mongodb host to change connect to (setname/host1,host2 for replica sets)")
+        print("  --port=<port>                          server port")
+        return;
+    }
 
     /* Required */ 
     file = myArgs[0]; if(file == undefined) return;
