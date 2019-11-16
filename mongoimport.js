@@ -9,6 +9,7 @@ var { xsltProcess, xmlParse } = require('xslt-processor');
 
 var print = (string) => console.log(string);
 var Info = (string) => console.info(string);
+var Error = (string) => console.error(string);
 var last = (a) => a[a.length - 1];
 var head = (a) => a[0];
 
@@ -34,12 +35,9 @@ var schema = () => new mongoose.Schema({});
 var create_collection = (db) => (name) => db.model(name,schema());
 
 // TODO: is_Array
-var is_Array = (content) => 0//Array.is_Array(content);
-var insert_all = (list) =>(nameDB) => (model) => model.collection.insertMany(list);
-var insert = (element) =>(nameDB) => (model) => {
-                                            var object = new model(element);
-                                            object.save().exec();
-                                            }
+var is_Array = (content) =>  Array.isArray(content);
+var insert_all = (list) => (model) => model.collection.insertMany(list);
+var insert = (element) => (model) => model.collection.insertMany([element]);
 
 
 
@@ -48,14 +46,21 @@ var mongoimport = (nameBD,nameC,content) => {
                                     //content = JSON.stringify(content);
                                     db = create_dataBase (nameBD);
                                     model = create_collection (db) (nameC);
-                                    (is_Array (content))? insert_all (content) (nameBD) (model)
-                                              : insert (content) (nameBD) (model);
+                                    (is_Array (content))? insert_all (content) (model)
+                                              : insert (content) (model);
                                     } 
 
-var readFile = (filename) => fs.readFileSync(filename).toString(); var xml_to_json = (filename) => xml.xml2json(readFile(filename), {compact: true, spaces: 4}); var csv_to_json = (filename) => csvToJson.getJsonFromCsv(filename); var xml_to_json_with_xslt = (filename) => (xslt_file) => xsltProcess( xmlParse( readFile(filename) ), xmlParse( readFile(xslt_file) ));                                            
+var readFile = (filename) => fs.readFileSync(filename).toString(); 
+var xml_to_json = (filename) => xml.xml2json(readFile(filename), {compact: true, spaces: 4});
+var csv_to_json = (filename) => csvToJson.getJsonFromCsv(filename); 
+var xml_to_json_with_xslt = (filename) => (xslt_file) => xsltProcess( xmlParse( readFile(filename) ), xmlParse( readFile(xslt_file) ));                                            
 
 // TODO: jsonFile_to_mongo
-var jsonFile_to_mongo = (filename) =>(nameDB) =>(nameC) => mongoimport( nameDB, nameC, jsonfile.readFileSync(filename) );
+var jsonFile_to_mongo = (filename) =>(nameDB) =>(nameC) => {
+                                                        let content = jsonfile.readFileSync(filename)
+                                                        print(content);
+                                                        mongoimport( nameDB, nameC, content );
+                                                        }
 // TODO: xmlFile_to_mongo
 var xmlFile_to_mongo = (filename)  =>(nameDB) =>(nameC) => mongoimport( nameDB, nameC, xml_to_json (filename) );
 // TODO: xmlFile_to_mongo_with_xslt
@@ -110,8 +115,9 @@ function main (myArgs = process.argv.slice(2)){
         default:
             print("O programa ainda não esta preparado para processar este tipo de dados") 
     }
+    return;
 }
-main()
+main();
 /*
 content_file = fs.readFileSync(file).toString();
 print(content_file);
