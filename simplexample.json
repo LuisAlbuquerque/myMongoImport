@@ -1,0 +1,48 @@
+{
+  "testSuites": [
+    {
+      "name": "TS_EdgeHome",
+      "testCases": [
+        {
+          "name": "tc_Login",
+          "data": "dt_EdgeCaseHome,dt_EdgeCaseRoute"
+        },
+        {
+          "name": "tc_Logout",
+          "data": "dt_EdgeCaseRoute"
+        }
+      ]
+    },
+    {
+      "name": "TS_EdgePanel",
+      "testCases": [
+        {
+          "name": "tc_AddContract",
+          "data": "dt_EdgeCaseHome,dt_EdgeCaseSpectrum"
+        }
+      ]
+    },
+    {
+      "name": "TS_EdgeRoute",
+      "testCases": [
+        {
+          "name": "tc_VerifyContract",
+          "data": "dt_EdgeCaseRoute"
+        },
+        {
+          "name": "tc_Payment",
+          "data": "dt_EdgeCaseRoute"
+        }
+      ]
+    },
+    {
+      "name": "TS_EdgeSpectrum",
+      "testCases": [
+        {
+          "name": "tc_ClientFeedback",
+          "data": "dt_EdgeCaseSpectrum"
+        }
+      ]
+    }
+  ]
+}
